@@ -1,0 +1,11 @@
+{{ if .Values.datadog.apiKeyCSI }}
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: {{ template "datadog.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "datadog.labels" . | indent 4 }}
+spec:
+{{ toYaml .Values.datadog.apiKeyCSI | indent 2 }}
+{{- end }}
